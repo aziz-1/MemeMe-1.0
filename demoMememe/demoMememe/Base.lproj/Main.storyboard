@@ -35,7 +35,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="bKF-sS-xQU"/>
                                     <barButtonItem style="plain" systemItem="camera" id="PAa-3q-ytP">
                                         <connections>
-                                            <action selector="pickImageFromCamera:" destination="BYZ-38-t0r" id="BGl-Mg-5SX"/>
+                                            <action selector="pickImage:" destination="BYZ-38-t0r" id="jyt-o1-Phb"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="nwe-AS-m2Y"/>

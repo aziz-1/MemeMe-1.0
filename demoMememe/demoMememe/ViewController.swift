@@ -28,23 +28,10 @@ class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavi
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        let memeTextAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.strokeColor: UIColor.black,
-            NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSAttributedString.Key.strokeWidth:  -2.0
-            
-            
-           
-        ]
-        // Do any additional setup after loading the view, typically from a nib.
-        topText.defaultTextAttributes = memeTextAttributes
-        bottomText.defaultTextAttributes = memeTextAttributes
-        topText.textAlignment = .center
-        bottomText.textAlignment = .center
-        self.topText.delegate = self
-        self.bottomText.delegate = self
         shareNavItem.isEnabled = false
+        prepareTextField(textField: topText, defaultText:"TOP")
+        prepareTextField(textField: bottomText, defaultText:"BOTTOM")
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -106,18 +93,9 @@ class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavi
     }
     
     
-    @IBAction func pickImage(_ sender: Any) {
+    @IBAction func pickImage(_ sender: UIBarButtonItem) {
         let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-         imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    @IBAction func pickImageFromCamera(_ sender: Any) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-         imagePicker.sourceType = .camera
+        imagePicker.sourceType = (sender.tag == 0) ? .photoLibrary : .camera
         present(imagePicker, animated: true, completion: nil)
     }
     
@@ -201,6 +179,34 @@ class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavi
     func setHidden(hide: Bool){
     toolbar.isHidden = hide
     navBar.isHidden = hide
+    }
+    
+    func prepareTextField(textField: UITextField, defaultText: String) {
+        let memeTextAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.strokeColor: UIColor.black,
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSAttributedString.Key.strokeWidth:  -2.0
+            
+            
+            
+        ]
+        
+        switch defaultText {
+        case "TOP":
+            topText.defaultTextAttributes = memeTextAttributes
+            topText.textAlignment = .center
+              self.topText.delegate = self
+        case "BUTTOM":
+            bottomText.defaultTextAttributes = memeTextAttributes
+            bottomText.textAlignment = .center
+            self.bottomText.delegate = self
+        default: break
+            
+        }
+        
+        
+        
     }
 }
 
