@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var ImagePickerView: UIImageView!
+    @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var topText: UITextField!
     @IBOutlet weak var bottomText: UITextField!
@@ -29,8 +29,8 @@ class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavi
     override func viewDidLoad() {
         super.viewDidLoad()
         shareNavItem.isEnabled = false
-        prepareTextField(textField: topText, defaultText:"TOP")
-        prepareTextField(textField: bottomText, defaultText:"BOTTOM")
+        prepareTextField(textField: topText)
+        prepareTextField(textField: bottomText)
         
     }
 
@@ -87,16 +87,17 @@ class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavi
     func save() {
         // Create the meme
         let memedImage: UIImage = generateMemedImage()
-        _ = Meme(topText: topText.text!, bottomText: bottomText.text!, originalImage: ImagePickerView.image!, editedImage: memedImage)
+        _ = Meme(topText: topText.text!, bottomText: bottomText.text!, originalImage: imagePickerView.image!, editedImage: memedImage)
         
         
     }
     
     
     @IBAction func pickImage(_ sender: UIBarButtonItem) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = (sender.tag == 0) ? .photoLibrary : .camera
-        present(imagePicker, animated: true, completion: nil)
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = (sender.tag == 0) ? .photoLibrary : .camera
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -108,7 +109,7 @@ class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavi
         if let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage? {
            view.layoutIfNeeded()
             
-            ImagePickerView.image = image
+            imagePickerView.image = image
             self.dismiss(animated: true, completion: nil)
             topText.isHidden = false
             bottomText.isHidden = false
@@ -181,7 +182,7 @@ class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavi
     navBar.isHidden = hide
     }
     
-    func prepareTextField(textField: UITextField, defaultText: String) {
+    func prepareTextField(textField: UITextField) {
         let memeTextAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.strokeColor: UIColor.black,
             NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -192,18 +193,11 @@ class ViewController: UIViewController,  UIImagePickerControllerDelegate, UINavi
             
         ]
         
-        switch defaultText {
-        case "TOP":
-            topText.defaultTextAttributes = memeTextAttributes
-            topText.textAlignment = .center
-              self.topText.delegate = self
-        case "BUTTOM":
-            bottomText.defaultTextAttributes = memeTextAttributes
-            bottomText.textAlignment = .center
-            self.bottomText.delegate = self
-        default: break
-            
-        }
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
+        textField.delegate = self
+        textField.autocapitalizationType = .allCharacters
+        
         
         
         

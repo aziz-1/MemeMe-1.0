@@ -89,9 +89,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="ImagePickerView" destination="x4Y-G4-9u9" id="EpI-pj-kyM"/>
                         <outlet property="bottomText" destination="vCJ-5i-Jfv" id="V4D-Kz-eSb"/>
                         <outlet property="cameraButton" destination="PAa-3q-ytP" id="Fuv-7L-AXm"/>
+                        <outlet property="imagePickerView" destination="x4Y-G4-9u9" id="EpI-pj-kyM"/>
                         <outlet property="navBar" destination="hWy-ri-Df9" id="poC-qS-82h"/>
                         <outlet property="shareNavItem" destination="rBl-Sr-Qpg" id="M5N-nw-bai"/>
                         <outlet property="toolbar" destination="vfr-uE-kZy" id="nvh-Tc-r4A"/>
